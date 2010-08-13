@@ -1,10 +1,10 @@
-CFLAGS=`gimp-config --cflags` `gtk-config --cflags`
-LDFLAGS=`gimp-config --libs` `gtk-config --libs`
+CFLAGS=`gimptool --cflags`
+LDFLAGS=`gimptool --libs`
 
 mapmake: mapmake.o map_gui.o
 
 install: mapmake
-	gimp-config --install-bin mapmake
+	gimptool --install-bin mapmake
 	
 clean:
 	rm *.o mapmake

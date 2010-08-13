@@ -40,11 +40,11 @@ static void query(void)
 	gimp_install_procedure("Add Isoline", BLURB, HELP, AUTHOR, COPYRIGHT, DATA, "<Image>/Filters/Test/Add Isoline", IMAGE_TYPES, GIMP_PLUGIN, pdb_nparams, 0, pdb_params, NULL); 
 }
 
-static void run(gchar G_GNUC_UNUSED *nome, gint nparams, GimpParam * params, gint *nretvals, GimpParam ** retparams)
+static void run(const gchar G_GNUC_UNUSED *nome, gint nparams, const GimpParam * params, gint *nretvals, GimpParam ** retparams)
 {
 	static GimpParam ret[1];
         GimpPDBStatusType* status;
-	GimpDrawable* drawable;
+	gint drawable;
 
 	param_type p = VIZ4;
 
@@ -56,7 +56,7 @@ static void run(gchar G_GNUC_UNUSED *nome, gint nparams, GimpParam * params, gin
 
 	*status = GIMP_PDB_CALLING_ERROR;
 
-	drawable = gimp_drawable_get(params[2].data.d_drawable);
+	//drawable = gimp_drawable_get(params[2].data.d_drawable);
 	
 	if (!gimp_get_data(nome, &p))
 		p = VIZ4;
@@ -95,16 +95,17 @@ static void run(gchar G_GNUC_UNUSED *nome, gint nparams, GimpParam * params, gin
 	return;
 }
 
-gint32 execute_plugin(GimpDrawable* d, char *nome, param_type *p)
+gint32 execute_plugin(gint d, const char *nome, param_type *p)
 {
 //	gint i;
 	guchar *img, *org;
 	gint x,y,x2,y2,w,h;
 //	guchar *work;
 	GimpPixelRgn region, rgn_org;
-	gint bpp = d->bpp;
+	GimpDrawable *drawable = gimp_drawable_get(d);
+	gint bpp = drawable->bpp;
 
-	gimp_drawable_mask_bounds(d->id, &x, &y, &x2, &y2);
+	gimp_drawable_mask_bounds(d, &x, &y, &x2, &y2);
 	w = x2 - x;
 	h = y2 - y;
 
@@ -112,9 +113,9 @@ gint32 execute_plugin(GimpDrawable* d, char *nome, param_type *p)
 	org = malloc(w * h * bpp);
 //	work = malloc(d.width * d.height * bpp);
 
-	gimp_pixel_rgn_init(&region, d, x, y, w, h, TRUE, TRUE);
+	gimp_pixel_rgn_init(&region, drawable, x, y, w, h, TRUE, TRUE);
 	//este é buffer para gravar a imagem modificada.
-	gimp_pixel_rgn_init(&rgn_org, d, x, y, w, h, FALSE, FALSE);
+	gimp_pixel_rgn_init(&rgn_org, drawable, x, y, w, h, FALSE, FALSE);
 	// Esta é a imagem em si 
 
 	gimp_pixel_rgn_get_rect(&region, img, x, y, w, h);
@@ -140,11 +141,11 @@ gint32 execute_plugin(GimpDrawable* d, char *nome, param_type *p)
 	gimp_pixel_rgn_set_rect(&region, img, x, y, w, h);
 
 	/* finish the process */
-	gimp_drawable_flush (d);
-	gimp_drawable_merge_shadow (d->id, TRUE);
-	gimp_drawable_update (d->id, x, y, w, h);
+	gimp_drawable_flush (drawable);
+	gimp_drawable_merge_shadow (d, TRUE);
+	gimp_drawable_update (d, x, y, w, h);
 	gimp_displays_flush();
-	gimp_drawable_detach(d);
+	gimp_drawable_detach(drawable);
 
 	free(img);
 	free(org);
