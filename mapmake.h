@@ -35,9 +35,9 @@ enum { VIZ8, VIZ4 };
  */
 
 static void query(void);
-static void run(gchar *, gint, GimpParam *, gint *, GimpParam **);
+static void run(const gchar *, gint, const GimpParam *, gint *, GimpParam **);
 
-gint32 execute_plugin(GimpDrawable *, char *, param_type *);
+gint32 execute_plugin(GimpDrawable*, const char *, param_type *);
 
 /* 
  * Estes dados são as informações do plugin

@@ -40,7 +40,7 @@ static void query(void)
 	gimp_install_procedure("Add Isoline", BLURB, HELP, AUTHOR, COPYRIGHT, DATA, "<Image>/Filters/Test/Add Isoline", IMAGE_TYPES, GIMP_PLUGIN, pdb_nparams, 0, pdb_params, NULL); 
 }
 
-static void run(gchar G_GNUC_UNUSED *nome, gint nparams, GimpParam * params, gint *nretvals, GimpParam ** retparams)
+static void run(const gchar G_GNUC_UNUSED *nome, gint nparams, const GimpParam * params, gint *nretvals, GimpParam ** retparams)
 {
 	static GimpParam ret[1];
         GimpPDBStatusType* status;
@@ -95,7 +95,7 @@ static void run(gchar G_GNUC_UNUSED *nome, gint nparams, GimpParam * params, gin
 	return;
 }
 
-gint32 execute_plugin(GimpDrawable* d, char *nome, param_type *p)
+gint32 execute_plugin(GimpDrawable* d, const char *nome, param_type *p)
 {
 //	gint i;
 	guchar *img, *org;
