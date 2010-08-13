@@ -104,7 +104,7 @@ gint32 execute_plugin(GimpDrawable* d, const char *nome, param_type *p)
 	GimpPixelRgn region, rgn_org;
 	gint bpp = d->bpp;
 
-	gimp_drawable_mask_bounds(d->id, &x, &y, &x2, &y2);
+	gimp_drawable_mask_bounds(d->drawable_id, &x, &y, &x2, &y2);
 	w = x2 - x;
 	h = y2 - y;
 
@@ -141,8 +141,8 @@ gint32 execute_plugin(GimpDrawable* d, const char *nome, param_type *p)
 
 	/* finish the process */
 	gimp_drawable_flush (d);
-	gimp_drawable_merge_shadow (d->id, TRUE);
-	gimp_drawable_update (d->id, x, y, w, h);
+	gimp_drawable_merge_shadow (d->drawable_id, TRUE);
+	gimp_drawable_update (d->drawable_id, x, y, w, h);
 	gimp_displays_flush();
 	gimp_drawable_detach(d);
 
