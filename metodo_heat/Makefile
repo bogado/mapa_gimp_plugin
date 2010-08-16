@@ -1,10 +1,10 @@
-CFLAGS=`gimp-config --cflags` `gtk-config --cflags` -g2
-LDFLAGS=`gimp-config --libs` `gtk-config --libs`
+CFLAGS=`gimptool --cflags` -g2
+LDFLAGS=`gimptool --libs`
 
 mapheat: mapheat.o
 
 install: mapheat
-	gimp-config --install-bin mapheat
+	gimptool --install-bin mapheat
 	
 clean:
 	rm *.o mapmake

@@ -36,7 +36,7 @@ static void query(void)
 	gimp_install_procedure("Mean", BLURB, HELP, AUTHOR, COPYRIGHT, DATA, "<Image>/Filters/Map tools/Mean", IMAGE_TYPES, GIMP_PLUGIN, pdb_nparams, 0, pdb_params, NULL); 
 }
 
-static void run(gchar G_GNUC_UNUSED *nome, gint nparams, GimpParam * params, gint *nretvals, GimpParam ** retparams)
+static void run(const gchar G_GNUC_UNUSED *nome, gint nparams, const GimpParam * params, gint *nretvals, GimpParam ** retparams)
 {
 	static GimpParam ret[1];
         GimpPDBStatusType* status;
@@ -72,7 +72,7 @@ static void run(gchar G_GNUC_UNUSED *nome, gint nparams, GimpParam * params, gin
 	return;
 }
 
-gint32 execute_plugin(GimpDrawable* d, char *nome)
+gint32 execute_plugin(GimpDrawable* d, const char *nome)
 {
 	DrawBuf *img, *r;
 
@@ -80,7 +80,7 @@ gint32 execute_plugin(GimpDrawable* d, char *nome)
 	gint bpp = d->bpp;
 	guint x,y,x2,y2,w,h;
 
-	gimp_drawable_mask_bounds(d->id, &x, &y, &x2, &y2);
+	gimp_drawable_mask_bounds(d->drawable_id, &x, &y, &x2, &y2);
 	w = x2 - x;
 	h = y2 - y;
 
@@ -114,8 +114,8 @@ gint32 execute_plugin(GimpDrawable* d, char *nome)
 
 	/* finish the process */
 	gimp_drawable_flush (d);
-	gimp_drawable_merge_shadow (d->id, TRUE);
-	gimp_drawable_update (d->id, x, y, w, h);
+	gimp_drawable_merge_shadow (d->drawable_id, TRUE);
+	gimp_drawable_update (d->drawable_id, x, y, w, h);
 	gimp_displays_flush();
 	gimp_drawable_detach(d);
 

@@ -31,9 +31,9 @@ extern GimpParamDef pdb_params[];
  */
 
 static void query(void);
-static void run(gchar *, gint, GimpParam *, gint *, GimpParam **);
+static void run(const gchar *, gint, const GimpParam *, gint *, GimpParam **);
 
-gint32 execute_plugin(GimpDrawable *, char *);
+gint32 execute_plugin(GimpDrawable *, const char *);
 
 /* 
  * Estes dados são as informações do plugin
