@@ -272,7 +272,7 @@ void copy_drawbuf(DrawBuf *o, DrawBuf *d)
 		d->w = o->w;
 		d->h = o->h;
 		d->bpp = o->bpp;
-		realloc(d->buf, BUFSIZE(d));
+		d->buf = realloc(d->buf, BUFSIZE(d));
 	}
 
 	memcpy(d->buf, o->buf, BUFSIZE(d));
