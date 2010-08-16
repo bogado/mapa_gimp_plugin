@@ -1,0 +1,3 @@
+*.o
+metodo_grow/mapmake
+metodo_heat/mapheat
